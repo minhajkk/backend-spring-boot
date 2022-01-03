@@ -1,5 +1,6 @@
 package com.bsf.backend.service;
 
+import com.bsf.backend.config.MyUserDetails;
 import com.bsf.backend.entity.User;
 import com.bsf.backend.entity.UserRepository;
 import com.bsf.backend.exception.UserExistException;
@@ -8,8 +9,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -23,8 +22,8 @@ public class UserService implements UserDetailsService {
 		if (user == null) {
 			throw new UsernameNotFoundException("User not found with username: " + username);
 		}
-		return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(),
-				new ArrayList<>());
+
+		return new MyUserDetails(user);
 	}
 
 	public User createUser(User user) throws UserExistException {

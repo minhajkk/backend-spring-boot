@@ -10,6 +10,7 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import java.math.BigDecimal;
+import java.util.Collection;
 
 @Getter
 @Setter
@@ -33,4 +34,13 @@ public class User {
     BigDecimal salary;
     @Min(1) @Max(31)
     Integer salaryDay;
+
+    @ManyToMany (fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "user_role",
+            joinColumns = @JoinColumn(
+                    name = "user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(
+                    name = "role_id", referencedColumnName = "id"))
+    private Collection<Role> roles;
 }
